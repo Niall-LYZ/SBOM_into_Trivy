@@ -12,11 +12,14 @@ jobs:
           python-version: '3.x'
       - name: Install dependencies
         run: pip install -r requirements.txt
+      - name: Get Python site-packages path
+        id: sitepkgs
+        run: echo "SITEPKGS=$(python -c 'import site; print(site.getsitepackages()[0])')" >> $GITHUB_ENV
       - name: Install Syft
         run: |
           curl -sSfL https://raw.githubusercontent.com/anchore/syft/main/install.sh | sh -s -- -b /usr/local/bin
       - name: Generate SBOM (Syft)
-        run: syft python:site-packages -o cyclonedx-json=sbom.json
+        run: syft $SITEPKGS -o cyclonedx-json=sbom.json
       - name: Upload SBOM
         uses: actions/upload-artifact@v4
         with:
