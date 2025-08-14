@@ -11,17 +11,17 @@ jobs:
         with:
           path: .
           format: cyclonedx-json
-          output-file: sbom.cdx.json
+          output-file: sbom.json
       - name: Upload SBOM
         uses: actions/upload-artifact@v4
         with:
           name: sbom
-          path: sbom.cdx.json
+          path: sbom.json
       - name: Scan SBOM with Trivy
         uses: aquasecurity/trivy-action@master
         with:
           scan-type: sbom
-          input: sbom.cdx.json
+          input: sbom.json
           format: table
           output: trivy-sbom-results.txt
       - name: Upload Trivy SBOM Results
