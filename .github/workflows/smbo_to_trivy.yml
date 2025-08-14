@@ -30,7 +30,7 @@ jobs:
         with:
           scan-type: sbom
           input: sbom.json
-          format: table
+          format: json
           output: trivy-sbom-results.txt
       - name: Upload Trivy SBOM Results
         uses: actions/upload-artifact@v4
